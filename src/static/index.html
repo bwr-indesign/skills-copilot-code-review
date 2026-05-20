@@ -12,8 +12,8 @@
     />
   </head>
   <body>
-    <div class="announcement-banner">
-  📢 Activity registration is open until the end of the month. Don't lose your spot!
+    <div id="announcement-banner" class="announcement-banner" role="region" aria-label="Announcements" aria-live="polite">
+      <!-- Announcements loaded dynamically -->
     </div>
     <header>
       <h1>Mergington High School</h1>
@@ -25,6 +25,10 @@
             <span>Login</span>
           </button>
           <div id="user-info" class="hidden">
+            <button id="manage-announcements-button" class="icon-button" aria-label="Manage announcements">
+              <span>📢</span>
+              <span>Announcements</span>
+            </button>
             <span id="display-name"></span>
             <button id="logout-button">Logout</button>
           </div>
@@ -134,6 +138,62 @@
           <button type="submit">Login</button>
         </form>
         <div id="login-message" class="hidden message"></div>
+      </div>
+    </div>
+
+    <!-- Announcements Management Modal -->
+    <div id="announcements-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="announcements-modal-title">
+      <div class="modal-content announcements-modal-content">
+        <button class="close-announcements-modal" aria-label="Close announcements manager">&times;</button>
+        <div class="announcements-modal-header">
+          <h3 id="announcements-modal-title">📢 Manage Announcements</h3>
+          <button id="add-announcement-button" class="btn-add-announcement" aria-label="Add new announcement">
+            + New Announcement
+          </button>
+        </div>
+
+        <!-- Add / Edit Form (hidden by default) -->
+        <div id="announcement-form-panel" class="announcement-form-panel hidden" aria-label="Announcement form">
+          <h4 id="announcement-form-title">New Announcement</h4>
+          <form id="announcement-form" novalidate>
+            <input type="hidden" id="announcement-id" value="" />
+            <div class="form-group">
+              <label for="announcement-message">Message <span class="required-star" aria-hidden="true">*</span></label>
+              <textarea
+                id="announcement-message"
+                rows="3"
+                required
+                placeholder="Enter announcement text…"
+                aria-required="true"
+                maxlength="500"
+              ></textarea>
+              <div class="char-counter"><span id="msg-char-count">0</span>/500</div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="announcement-start-date">Start Date <span class="optional-label">(optional)</span></label>
+                <input type="date" id="announcement-start-date" aria-label="Announcement start date" />
+              </div>
+              <div class="form-group">
+                <label for="announcement-expiration-date">Expiration Date <span class="required-star" aria-hidden="true">*</span></label>
+                <input type="date" id="announcement-expiration-date" required aria-required="true" />
+              </div>
+            </div>
+            <div id="announcement-form-error" class="form-error hidden" role="alert"></div>
+            <div class="form-actions">
+              <button type="button" id="cancel-announcement-form" class="btn-cancel">Cancel</button>
+              <button type="submit" id="save-announcement-button" class="btn-save">Save</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Announcements List -->
+        <div id="announcements-list-container">
+          <div id="announcements-management-list" role="list" aria-label="All announcements">
+            <!-- Populated by JS -->
+          </div>
+          <p id="no-announcements-msg" class="no-announcements-msg hidden">No announcements yet. Add one above!</p>
+        </div>
       </div>
     </div>
 
